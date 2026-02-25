@@ -3,18 +3,15 @@ from app.engine import conduct_duel
 
 
 def battle(knights_config: dict) -> dict:
-    lancelot = Knight(knights_config["lancelot"])
-    arthur = Knight(knights_config["arthur"])
-    mordred = Knight(knights_config["mordred"])
-    red_knight = Knight(knights_config["red_knight"])
+    knights = {
+        name: Knight(config)
+        for name, config in knights_config.items()
+    }
 
-    conduct_duel(lancelot, mordred)
+    conduct_duel(knights["lancelot"], knights["mordred"])
 
-    conduct_duel(arthur, red_knight)
-
+    conduct_duel(knights["arthur"], knights["red_knight"])
     return {
-        lancelot.name: lancelot.hp,
-        arthur.name: arthur.hp,
-        mordred.name: mordred.hp,
-        red_knight.name: red_knight.hp
+        knight.name: knight.hp
+        for knight in knights.values()
     }
